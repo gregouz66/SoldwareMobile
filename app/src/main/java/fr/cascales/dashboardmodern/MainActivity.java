@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Click dashboard
             case R.id.activity_main_drawer_dashboard :
                 //Open other activity
-                Intent articleActivity = new Intent(getApplicationContext(), MainActivity.class);
+                Intent articleActivity = new Intent(getApplicationContext(), ScannedBarcodeActivity.class);
                 startActivity(articleActivity);
                 finish();
                 break;
