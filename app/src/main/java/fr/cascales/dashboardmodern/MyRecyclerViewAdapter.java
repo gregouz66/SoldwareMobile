@@ -1,7 +1,6 @@
 package fr.cascales.dashboardmodern;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
@@ -41,7 +36,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.myTextView.setText(mData.get(position).getTitle());
         new DownloadImageTask(holder.myImageView).execute(mData.get(position).getImageDefault());
-        //holder.myImageView.setImage(mData.get(position).getImageDefault());
     }
 
 

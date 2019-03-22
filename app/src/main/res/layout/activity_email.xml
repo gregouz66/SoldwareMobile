@@ -5,6 +5,7 @@
     android:paddingBottom="15dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp"
+    android:background="@drawable/gradient_bg"
     android:paddingTop="15dp">
 
 
@@ -15,7 +16,7 @@
         android:layout_below="@+id/inBody"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Send email" />
+        android:text="Envoyer l'email" />
 
 
     <TextView
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:text="Email Address: "
+        android:text="Adresse email: "
         android:textStyle="bold" />
 
     <EditText
@@ -33,7 +34,7 @@
         android:layout_below="@+id/txtEmailAddress"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="Subject" />
+        android:hint="Sujet" />
 
     <EditText
         android:id="@+id/inBody"
@@ -42,5 +43,5 @@
         android:layout_below="@+id/inSubject"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="Body" />
+        android:hint="Contenu de l'email" />
 </RelativeLayout>

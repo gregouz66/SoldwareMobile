@@ -32,6 +32,7 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
     Button btnAction;
     String intentData = "";
     boolean isEmail = false;
+    boolean isUrl = false;
 
 
     @Override
@@ -55,8 +56,10 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
                 if (intentData.length() > 0) {
                     if (isEmail)
                         startActivity(new Intent(ScannedBarcodeActivity.this, EmailActivity.class).putExtra("email_address", intentData));
-                    else {
+                    else if(isUrl) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Texte du QR Code : "+intentData, Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -67,7 +70,7 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
 
     private void initialiseDetectorsAndSources() {
 
-        Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Scanner de code à barres démarré.", Toast.LENGTH_SHORT).show();
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -110,7 +113,7 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Pour éviter les fuites de mémoire, le scanner de code à barres a été arrêté", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -128,11 +131,26 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
                                 txtBarcodeValue.removeCallbacks(null);
                                 intentData = barcodes.valueAt(0).email.address;
                                 txtBarcodeValue.setText(intentData);
+                                //DefineWhatIsThis
                                 isEmail = true;
-                                btnAction.setText("ADD CONTENT TO THE MAIL");
-                            } else {
+                                isUrl = false;
+                                //Btn Text
+                                btnAction.setText("Envoyer un email");
+                            } else if(barcodes.valueAt(0).url != null) {
+                                //DefineWhatIsThis
                                 isEmail = false;
-                                btnAction.setText("LAUNCH URL");
+                                isUrl = true;
+                                //Btn Text
+                                btnAction.setText("Visiter le site web");
+                                intentData = barcodes.valueAt(0).displayValue;
+                                txtBarcodeValue.setText(intentData);
+
+                            } else {
+                                //DefineWhatIsThis
+                                isEmail = false;
+                                isUrl = false;
+                                //Btn Text
+                                btnAction.setText("Ajouter du stock à l'article");
                                 intentData = barcodes.valueAt(0).displayValue;
                                 txtBarcodeValue.setText(intentData);
 

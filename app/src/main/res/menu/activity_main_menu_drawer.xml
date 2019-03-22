@@ -8,6 +8,11 @@
             android:id="@+id/activity_main_drawer_dashboard"
             android:icon="@drawable/bookmark"
             android:title="Les logiciels" />
+
+        <item
+            android:id="@+id/activity_main_drawer_inventaire"
+            android:icon="@drawable/bookmark"
+            android:title="Gestion d'inventaire" />
     </group>
 
     <item android:title="Configuration">

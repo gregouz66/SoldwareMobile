@@ -1,8 +1,6 @@
 package fr.cascales.dashboardmodern;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,24 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -65,21 +51,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-        //REST
+        //REST ARTICLES
         this.getArticlesREST();
-
-        //GRIDS ARTICLES
-        // data to populate the RecyclerView with
-        //String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48"};
-        // set up the RecyclerView
-        //getingrids_articles(data);
 
         // 6 - Configure all views
         //this.configureToolBar();
         this.configureDrawerLayout();
         this.configureNavigationView();
-
-
     }
 
     @Override
@@ -103,9 +81,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //Click dashboard
             case R.id.activity_main_drawer_dashboard :
                 //Open other activity
-                Intent articleActivity = new Intent(getApplicationContext(), ScannedBarcodeActivity.class);
+                Intent articleActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(articleActivity);
                 finish();
+                break;
+            //Click inventaire
+            case R.id.activity_main_drawer_inventaire :
+                //Open other activity
+                Intent inventaireActivity = new Intent(getApplicationContext(), ScannedBarcodeActivity.class);
+                startActivity(inventaireActivity);
+                //finish();
                 break;
             //Click Profile
             case R.id.activity_main_drawer_parametres:
@@ -125,8 +110,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    //Click in single article
+    @Override
+    public void onItemClick(View view, int position) {
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle(adapter.getArticle(position).getTitle())
+                .setMessage(
+                        adapter.getArticle(position).getContent()+"\n\n"+
+                                adapter.getArticle(position).getCompatibility()+"\n\n"+
+                                adapter.getArticle(position).getLanguage()
+                )
+                .show();
+    }
+
     // ---------------------
-    // CONFIGURATION
+    // CONFIGURATION TOOLBAR
     // ---------------------
 
     // 1 - Configure Toolbar
@@ -148,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    // ---------------------
+    // CONFIGURATION REST API ARTICLES
+    // ---------------------
 
     //REST API
     private void getArticlesREST(){
@@ -193,19 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Set items count
         TextView txt_itemCount = findViewById(R.id.length_items);
         txt_itemCount.setText(adapter.getItemCount() + " articles");
-    }
-
-    //Click in single article
-    @Override
-    public void onItemClick(View view, int position) {
-        new AlertDialog.Builder(MainActivity.this)
-                .setTitle(adapter.getArticle(position).getTitle())
-                .setMessage(
-                        adapter.getArticle(position).getContent()+"\n\n"+
-                        adapter.getArticle(position).getCompatibility()+"\n\n"+
-                        adapter.getArticle(position).getLanguage()
-                )
-                .show();
     }
 
 }

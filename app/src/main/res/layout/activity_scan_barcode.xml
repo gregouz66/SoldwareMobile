@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     android:padding="15dp">
 
     <SurfaceView
@@ -20,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:text="No Barcode Detected"
+        android:text="Aucun QR Code détecté"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
