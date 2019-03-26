@@ -1,11 +1,13 @@
 package fr.cascales.dashboardmodern;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -41,6 +43,9 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_barcode);
 
         initViews();
+
+        //Check connexion
+        internetOrExit();
     }
 
     private void initViews() {
@@ -182,5 +187,33 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
+    }
+
+    //CHECK CONNECTION
+    private void internetOrExit(){
+        //Check connexion
+        if(!NetworkConnexion.isNetworkAvailable(getApplicationContext())){
+            //message
+            //Snackbar.make(getWindow().getDecorView().getRootView(), "Aucune connexion à internet !", Snackbar.LENGTH_SHORT).show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Oops");
+            builder.setMessage("Aucune connexion à internet, veuillez relancer l'application.");
+            builder.setPositiveButton("Relancer",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //restart
+                            Intent restartIntent = getBaseContext().getPackageManager()
+                                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(restartIntent);
+                            finish();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }

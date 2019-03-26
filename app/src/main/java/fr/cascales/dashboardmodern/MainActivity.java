@@ -1,7 +1,12 @@
 package fr.cascales.dashboardmodern;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,11 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -51,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+
+        //Check connexion
+        internetOrExit();
+
         //REST ARTICLES
         this.getArticlesREST();
 
@@ -167,7 +178,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
                 if(!response.isSuccessful()){
-                    textViewResult.setText("Code : "+ response.code());
+                    //textViewResult.setText("Code : "+ response.code());
+                    textViewResult.setText("Aucune connexion internet");
                     return;
                 }
 
@@ -179,7 +191,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<List<Article>> call, Throwable t) {
-                textViewResult.setText(t.getMessage());
+                //textViewResult.setText(t.getMessage());
+                textViewResult.setText("Aucune connexion internet");
             }
         });
     }
@@ -195,6 +208,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Set items count
         TextView txt_itemCount = findViewById(R.id.length_items);
         txt_itemCount.setText(adapter.getItemCount() + " articles");
+    }
+
+    //CHECK CONNECTION
+    private void internetOrExit(){
+        //Check connexion
+        if(!NetworkConnexion.isNetworkAvailable(getApplicationContext())){
+            //message
+            //Snackbar.make(getWindow().getDecorView().getRootView(), "Aucune connexion à internet !", Snackbar.LENGTH_SHORT).show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Oops");
+            builder.setMessage("Aucune connexion à internet, veuillez relancer l'application.");
+            builder.setPositiveButton("Relancer",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //restart
+                            Intent restartIntent = getBaseContext().getPackageManager()
+                                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(restartIntent);
+                            finish();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
 }

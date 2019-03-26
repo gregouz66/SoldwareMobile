@@ -1,5 +1,8 @@
 package fr.cascales.dashboardmodern;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +38,9 @@ public class OneArticleStockActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_article_stock);
+
+        //Check connexion
+        internetOrExit();
 
         imgArticle = findViewById(R.id.image_article_stock);
         txtTitle = findViewById(R.id.title_article_stock);
@@ -129,6 +135,34 @@ public class OneArticleStockActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    //CHECK CONNECTION
+    private void internetOrExit(){
+        //Check connexion
+        if(!NetworkConnexion.isNetworkAvailable(getApplicationContext())){
+            //message
+            //Snackbar.make(getWindow().getDecorView().getRootView(), "Aucune connexion à internet !", Snackbar.LENGTH_SHORT).show();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Oops");
+            builder.setMessage("Aucune connexion à internet, veuillez relancer l'application.");
+            builder.setPositiveButton("Relancer",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //restart
+                            Intent restartIntent = getBaseContext().getPackageManager()
+                                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(restartIntent);
+                            finish();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
 
