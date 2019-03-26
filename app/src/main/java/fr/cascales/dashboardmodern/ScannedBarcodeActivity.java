@@ -59,7 +59,15 @@ public class ScannedBarcodeActivity extends AppCompatActivity {
                     else if(isUrl) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(intentData)));
                     } else {
-                        Toast.makeText(getApplicationContext(), "Texte du QR Code : "+intentData, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Texte du QR Code : "+intentData, Toast.LENGTH_SHORT).show();
+                        //Create activity
+                        Intent articleStockActivity = new Intent(getApplicationContext(), OneArticleStockActivity.class);
+                        //Set parameters (id)
+                        Bundle b = new Bundle();
+                        b.putInt("id", Integer.valueOf(intentData)); //Your id
+                        articleStockActivity.putExtras(b); //Put your id to your next Intent
+                        //Start Activity
+                        startActivity(articleStockActivity);
                     }
                 }
 

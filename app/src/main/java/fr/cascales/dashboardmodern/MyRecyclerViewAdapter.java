@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
@@ -35,7 +37,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.myTextView.setText(mData.get(position).getTitle());
-        new DownloadImageTask(holder.myImageView).execute(mData.get(position).getImageDefault());
+        //new DownloadImageTask(holder.myImageView).execute(mData.get(position).getImageDefault());
+        Picasso.get()
+                .load(mData.get(position).getImageDefault())
+                .placeholder(R.drawable.loader)
+                .fit()
+                .into(holder.myImageView);
     }
 
 

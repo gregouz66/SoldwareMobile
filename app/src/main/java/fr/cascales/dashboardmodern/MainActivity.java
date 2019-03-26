@@ -113,14 +113,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //Click in single article
     @Override
     public void onItemClick(View view, int position) {
-        new AlertDialog.Builder(MainActivity.this)
-                .setTitle(adapter.getArticle(position).getTitle())
-                .setMessage(
-                        adapter.getArticle(position).getContent()+"\n\n"+
-                                adapter.getArticle(position).getCompatibility()+"\n\n"+
-                                adapter.getArticle(position).getLanguage()
-                )
-                .show();
+        //Create activity
+        Intent articleActivity = new Intent(getApplicationContext(), OneArticleActivity.class);
+        //Set parameters (id)
+        Bundle b = new Bundle();
+        b.putInt("id", adapter.getArticle(position).getId()); //Your id
+        articleActivity.putExtras(b); //Put your id to your next Intent
+        //Start Activity
+        startActivity(articleActivity);
     }
 
     // ---------------------
