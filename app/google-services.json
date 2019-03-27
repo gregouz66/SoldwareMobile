@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "501616363303",
+    "firebase_url": "https://dashboardmodern.firebaseio.com",
+    "project_id": "dashboardmodern",
+    "storage_bucket": "dashboardmodern.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501616363303:android:eb8e764288546213",
+        "android_client_info": {
+          "package_name": "fr.cascales.dashboardmodern"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501616363303-q589msa78br3rlkc229rn614rbf9h4r4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.cascales.dashboardmodern",
+            "certificate_hash": "7ec14b5e7cb2b8187d6ae74ead45b0a1adbbadde"
+          }
+        },
+        {
+          "client_id": "501616363303-7jii3l8efpd9ss1gur0efqehulmhc94b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcAC-u3ARSnup6PyZyYb941E2PSywRLH4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "501616363303-7jii3l8efpd9ss1gur0efqehulmhc94b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
